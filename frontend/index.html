@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chatbot Frontend</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="p-4">
+<div class="container">
+    <h1 class="mb-4">Chatbot</h1>
+    <div class="input-group mb-3">
+        <input type="text" id="userInput" class="form-control" placeholder="Type something">
+        <div class="input-group-append">
+            <button class="btn btn-primary" onclick="send()">Send</button>
+        </div>
+    </div>
+    <pre id="response" class="border p-3"></pre>
+</div>
+<script>
+function send() {
+    const text = document.getElementById('userInput').value;
+    fetch('../backend/public/index.php/api/hello?text=' + encodeURIComponent(text))
+        .then(r => r.json())
+        .then(d => document.getElementById('response').textContent = d.message)
+        .catch(err => document.getElementById('response').textContent = 'Error: ' + err);
+}
+</script>
+</body>
+</html>
